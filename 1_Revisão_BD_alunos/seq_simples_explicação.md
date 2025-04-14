@@ -55,13 +55,26 @@ VALUES ('Ficção Científica', 'Livros que exploram conceitos científicos avan
 INSERT INTO categorias (nome, descricao)
 VALUES ('Romance', 'Narrativas centradas em relações amorosas');
 
+INSERT INTO categorias (nome, descricao)
+VALUES ('Terror', 'Livros com um ar tenebrosso e assustador');
+
+INSERT INTO categorias (nome, descricao)
+VALUES ('Drama', 'Narrativas centradas em Dramas');
+
 -- Inserindo livros
 INSERT INTO livros (titulo, isbn, ano, categoria_id)
 VALUES ('Fundação', '9788576572664', 1951, 1);
 
 INSERT INTO livros (titulo, isbn, ano, categoria_id)
 VALUES ('Orgulho e Preconceito', '9788544001820', 1813, 2);
+
+INSERT INTO livros (titulo, isbn, ano, categoria_id)
+VALUES ('Moscas', '5888293344323', 1997, 3);
+
+INSERT INTO livros (titulo, isbn, ano, categoria_id)
+VALUES ('Gente pobre', '6564301650', 1815, 4);
 ```
+
 
 ### READ (R) - SELECT
 
@@ -90,6 +103,10 @@ Atualização de registros:
 -- Atualizando o ano de um livro
 UPDATE livros
 SET ano = 1952
+WHERE id = 1;
+
+UPDATE livros
+SET titulo = 'Fundação (2025)'
 WHERE id = 1;
 ```
 
@@ -214,7 +231,7 @@ BEGIN
 END //
 DELIMITER ;
 ```
-
+<!-- AAAAAAAAA -->
 ```markdown
 # 📌 Como Visualizar os Triggers Criados?
 
