@@ -6,28 +6,16 @@
 
 ```sql
 -- Criação do banco de dados
-CREATE DATABASE eventos CHARACTER SET utf8mb4;
-Use eventos:
+CREATE DATABASE palestra CHARACTER SET utf8mb4;
+USE palestra;
 
--- Seleciona o banco de dados
-
-```
-
-### 2. Criação das Tabelas
-
-```sql
 -- Tabela de palestrantes
 CREATE TABLE palestrantes (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     especialidade VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL
 );
-
-
-
-
-
 
 -- Tabela de eventos
 CREATE TABLE eventos (
@@ -36,39 +24,28 @@ CREATE TABLE eventos (
     date_evento DATE,
     local VARCHAR(100) NOT NULL,
     capacidade INT,
-    Palestrante_id INT,
+    palestrante_id INT
 );
-
-
-
-
-
-
 
 -- Tabela de inscrições
 CREATE TABLE inscricoes (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    eventos_id INT NOT NULL,
+    evento_id INT NOT NULL,
     nome_participante VARCHAR(100) NOT NULL,
     email VARCHAR(100),
     data_inscricao TIMESTAMP,
-    presente TINYINT,
-    
+    presente TINYINT
 );
 
-
--- Criando relação entre tabelas com chave estrangeira
+-- Chave estrangeira: inscricoes -> eventos
 ALTER TABLE inscricoes
 ADD CONSTRAINT fk_inscricoes_eventos
-FOREIGN KEY (eventos_id) REFERENCES eventos(id);
+FOREIGN KEY (evento_id) REFERENCES eventos(id);
 
--- Criando relação entre tabelas com chave estrangeira
+-- Chave estrangeira: eventos -> palestrantes
 ALTER TABLE eventos
 ADD CONSTRAINT fk_eventos_palestrantes
-FOREIGN KEY (palestrantes_id) REFERENCES palestrantes(id);
-
-
-
+FOREIGN KEY (palestrante_id) REFERENCES palestrantes(id);
 
 ```
 
@@ -77,29 +54,29 @@ FOREIGN KEY (palestrantes_id) REFERENCES palestrantes(id);
 ```sql
 -- Inserir palestrantes
 INSERT INTO palestrantes (nome, especialidade, email)
-VALUES ('Maria Silva, especialista em Inteligência Artificial, email: maria@exemplo.com');
+VALUES ('Maria Silva', 'especialista em Inteligência Artificial', 'maria@exemplo.com');
 
 INSERT INTO palestrantes (nome, especialidade, email)
-VALUES ('João Santos, especialista em Marketing Digital, email: joao@exemplo.com');
+VALUES ('João Santos', 'especialista em Marketing Digital', 'joao@exemplo.com');
 
 
 -- Inserir eventos
 INSERT INTO eventos (titulo, date_evento, local, capacidade, Palestrante_id)
-VALUES ('Workshop de IA, data: 15/11/2023, local: Auditório Principal, capacidade: 100 pessoas, 1');
+VALUES ('Workshop de IA', '2023-11-15', 'Auditório Principal', '100','1');
 
 INSERT INTO eventos (titulo, date_evento, local, capacidade, Palestrante_id)
-VALUES ('Conferência de Marketing, data: 10/12/2023, local: Sala de Convenções, capacidade: 200 pessoas, 2');
+VALUES ('Conferência de Marketing', '2023-12-10', 'Sala de Convenções', '200','2');
 
 
 -- Inserir algumas inscrições
 INSERT INTO inscricoes (evento_id, nome_participante, email, data_inscricao, presente)
-VALUES ('1, Carlos Oliveira, email :carlos@email.com, data: 15/11/2023');
+VALUES ('1', 'Carlos Oliveira', 'carlos@email.com', '2023-11-15','1');
 
 INSERT INTO inscricoes (evento_id, nome_participante, email, data_inscricao, presente)
-VALUES ('1, Ana Souza, email :ana@email.com, data: 15/11/2023');
+VALUES ('1', 'Ana Souza', 'ana@email.com', '2023-11-15','1');
 
 INSERT INTO inscricoes (evento_id, nome_participante, email, data_inscricao, presente)
-VALUES ('2, Bruno Lima, email: bruno@email.com, date: 10/12/2023');
+VALUES ('2', 'Bruno Lima', 'bruno@email.com', '2023-12-10','1');
 
 ```
 
@@ -139,12 +116,11 @@ SELECT * FROM vw_eventos_detalhados;
 
 
 -- 2. Mostrar apenas eventos com vagas disponíveis (usando a view criada)
-SELECT id, titulo, data_evento, local, vagas_disponiveis 
+SELECT id, titulo, date_evento, local, vagas_disponiveis 
 FROM vw_eventos_detalhados
 WHERE vagas_disponiveis > 0;
 
 -- 3. Listar participantes inscritos em um evento específico
-
-
+    SELECT * FROM inscricoes WHERE evento_id = 1;
 
 ```
